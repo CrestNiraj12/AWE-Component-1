@@ -44,7 +44,7 @@ class HtmlProductWriter extends ShopProductWriter
         $addProduct = $this->generateAddProductForm();
 
         return
-            '<body>'
+            '<body><h1>Component 1</h1>'
             . $booktable .
             '<br />'
             . $cdtable .
@@ -164,7 +164,6 @@ class HtmlProductWriter extends ShopProductWriter
           </select> 
           </div>
           <br />
-          <br />
          <label for="name">Author / Artist / Game:</label><br />
          <div class="formInput">
          <label for="fname">First Name:</label>
@@ -176,18 +175,15 @@ class HtmlProductWriter extends ShopProductWriter
            <input type="text" id="sname" name="sname">
             </div>
            <br />
-           <br />
            <div class="formInput">
          <label for="title">Title:</label>
            <input type="text" id="title" name="title">
            </div>
            <br />
-           <br />
            <div class="formInput">
          <label for="pages">Pages/Duration/PEGI:</label>
            <input type="text" id="pages" name="pages">
            </div>
-           <br />
            <br />
            <div class="formInput">
           <label for="price">Price:</label>
