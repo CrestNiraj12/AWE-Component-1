@@ -152,37 +152,52 @@ class HtmlProductWriter extends ShopProductWriter
     {
         return '
           <hr />
+          <div class="addForm">
           <h2>ADD NEW PRODUCT</h2>
          <form action="./index.php" method="post">
+         <div class="formInput">
           <label for="producttype">Product Type:</label>
           <select id="producttype" name="producttype">
                 <option value="cd">CD</option>
                 <option value="book">Book</option>
                 <option value="game">Game</option>
           </select> 
+          </div>
           <br />
           <br />
          <label for="name">Author / Artist / Game:</label><br />
+         <div class="formInput">
          <label for="fname">First Name:</label>
-           <input type="text" id="fname" name="fname"><br />
+           <input type="text" id="fname" name="fname">
+           </div>
+           <br />
+           <div class="formInput">
           <label for="sname">Main Name / Surname / Console:</label>
            <input type="text" id="sname" name="sname">
+            </div>
            <br />
            <br />
+           <div class="formInput">
          <label for="title">Title:</label>
            <input type="text" id="title" name="title">
+           </div>
            <br />
            <br />
+           <div class="formInput">
          <label for="pages">Pages/Duration/PEGI:</label>
            <input type="text" id="pages" name="pages">
+           </div>
            <br />
            <br />
+           <div class="formInput">
           <label for="price">Price:</label>
            <input type="text" id="price" name="price">
+           </div>
            <br />
            <br /> 
            <input type="submit" value="Submit">
         </form> 
+        </div>
         ';
     }
 }
