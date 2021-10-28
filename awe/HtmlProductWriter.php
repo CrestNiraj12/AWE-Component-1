@@ -32,12 +32,14 @@ class HtmlProductWriter extends ShopProductWriter
         $gameproducts = [];
 
         foreach ($this->products as $product) {
-         if($product instanceof BookProduct) $bookproducts[] = $product;
-         if($product instanceof CdProduct) $cdproducts[] = $product;
+            if ($product instanceof BookProduct) $bookproducts[] = $product;
+            if ($product instanceof CdProduct) $cdproducts[] = $product;
+            if ($product instanceof GameProduct) $gameproducts[] = $product;
         }
 
         $booktable = $this->generateBookTable($bookproducts);
         $cdtable = $this->generateCdTable($cdproducts);
+        $gametable = $this->generateGameTable($gameproducts);
 
         $addProduct = $this->generateAddProductForm();
 
@@ -45,9 +47,11 @@ class HtmlProductWriter extends ShopProductWriter
             '<body>'
             . $booktable .
             '<br />'
-            .$cdtable.
+            . $cdtable .
             '<br />'
-            .$addProduct .
+            . $gametable .
+            '<br />'
+            . $addProduct .
             '</body>';
     }
 
@@ -56,11 +60,11 @@ class HtmlProductWriter extends ShopProductWriter
         $contents = '';
         foreach ($bookproducts as $book) {
             $contents .= '<tr>
-                  <td>'.$book->getFullName().'</td>'
-                .'<td>'.$book->getTitle().'</td>'
-                .'<td>'.$book->getNumberOfPages().'</td>'
-                .'<td>'.$book->getPrice().'</td>'
-                .'<td>'.'<a href="./index.php?delete='.$book->getId().'">X</a>'.'</td>
+                  <td>' . $book->getFullName() . '</td>'
+                . '<td>' . $book->getTitle() . '</td>'
+                . '<td>' . $book->getNumberOfPages() . '</td>'
+                . '<td>' . $book->getPrice() . '</td>'
+                . '<td>' . '<a href="./index.php?delete=' . $book->getId() . '">X</a>' . '</td>
                 </tr>';
         }
         return
@@ -77,8 +81,8 @@ class HtmlProductWriter extends ShopProductWriter
                     </tr>
                     </thead>
                     <tbody>'
-            .$contents.
-                '</tbody>
+            . $contents .
+            '</tbody>
             </table>';
     }
 
@@ -87,11 +91,11 @@ class HtmlProductWriter extends ShopProductWriter
         $contents = '';
         foreach ($cdproducts as $cd) {
             $contents .= '<tr>
-                  <td>'.$cd->getFullName().'</td>'
-                .'<td>'.$cd->getTitle().'</td>'
-                .'<td>'.$cd->getPlayLength().'</td>'
-                .'<td>'.$cd->getPrice().'</td>'
-                .'<td>'.'<a href="./index.php?delete='.$cd->getId().'">X</a>'.'</td>
+                  <td>' . $cd->getFullName() . '</td>'
+                . '<td>' . $cd->getTitle() . '</td>'
+                . '<td>' . $cd->getPlayLength() . '</td>'
+                . '<td>' . $cd->getPrice() . '</td>'
+                . '<td>' . '<a href="./index.php?delete=' . $cd->getId() . '">X</a>' . '</td>
                 </tr>';
         }
         return
@@ -108,7 +112,38 @@ class HtmlProductWriter extends ShopProductWriter
                     </tr>
                     </thead>
                     <tbody>'
-            .$contents.
+            . $contents .
+            '</tbody>
+            </table>';
+    }
+
+    private function generateGameTable($gameproducts)
+    {
+        $contents = '';
+        foreach ($gameproducts as $game) {
+            $contents .= '<tr>
+                  <td>' . $game->getFullName() . '</td>'
+                . '<td>' . $game->getTitle() . '</td>'
+                . '<td>' . $game->getPEGI() . '</td>'
+                . '<td>' . $game->getPrice() . '</td>'
+                . '<td>' . '<a href="./index.php?delete=' . $game->getId() . '">X</a>' . '</td>
+                </tr>';
+        }
+        return
+            '
+            <h3>GAMES</h3>
+            <table class="paleBlueRows equal-width">
+                 <thead>
+                    <tr>                    
+                        <th>CONSOLE</th>
+                        <th>TITLE</th>
+                        <th>PEGI</th>
+                        <th>PRICE</th>
+                        <th>DELETE</th>
+                    </tr>
+                    </thead>
+                    <tbody>'
+            . $contents .
             '</tbody>
             </table>';
     }
@@ -123,13 +158,14 @@ class HtmlProductWriter extends ShopProductWriter
           <select id="producttype" name="producttype">
                 <option value="cd">CD</option>
                 <option value="book">Book</option>
+                <option value="game">Game</option>
           </select> 
           <br />
           <br />
-         <label for="name">Author / Artist:</label><br />
+         <label for="name">Author / Artist / Game:</label><br />
          <label for="fname">First Name:</label>
            <input type="text" id="fname" name="fname"><br />
-          <label for="sname">Main Name / Surname:</label>
+          <label for="sname">Main Name / Surname / Console:</label>
            <input type="text" id="sname" name="sname">
            <br />
            <br />
@@ -137,7 +173,7 @@ class HtmlProductWriter extends ShopProductWriter
            <input type="text" id="title" name="title">
            <br />
            <br />
-         <label for="pages">Pages/Duration:</label>
+         <label for="pages">Pages/Duration/PEGI:</label>
            <input type="text" id="pages" name="pages">
            <br />
            <br />

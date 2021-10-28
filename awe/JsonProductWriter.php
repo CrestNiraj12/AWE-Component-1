@@ -10,7 +10,7 @@ class JsonProductWriter extends ShopProductWriter
     {
         $json_str = '[';
         foreach ($this->products as $product) {
-          $json_str .= $this->addEachProductAsJSON($product).',';
+            $json_str .= $this->addEachProductAsJSON($product) . ',';
         }
         $json_str = rtrim($json_str, ","); //remove final ',' from outputted json string
 
@@ -18,7 +18,8 @@ class JsonProductWriter extends ShopProductWriter
         echo $json_str;
     }
 
-    private function addEachProductAsJSON($product){
+    private function addEachProductAsJSON($product)
+    {
         $json_product = [];
         $json_product['id'] = $product->getId();
         $json_product['title'] = $product->getTitle();
@@ -26,13 +27,17 @@ class JsonProductWriter extends ShopProductWriter
         $json_product['mainname'] = $product->getMainName();
         $json_product['price'] = $product->getPrice();
 
-        if($product instanceof BookProduct) {
+        if ($product instanceof BookProduct) {
             $json_product['numpages'] = $product->getNumberOfPages();
             $json_product['type'] = "book";
         }
-        if($product instanceof CDProduct) {
+        if ($product instanceof CDProduct) {
             $json_product['playlength'] = $product->getPlayLength();
             $json_product['type'] = "cd";
+        }
+        if ($product instanceof GameProduct) {
+            $json_product['pegi'] = $product->getPEGI();
+            $json_product['type'] = "game";
         }
 
         return json_encode($json_product);
