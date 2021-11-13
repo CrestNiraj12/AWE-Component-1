@@ -6,37 +6,62 @@ namespace awe;
 
 class JsonUtility
 {
-    public static function makeProductArray(string $file) {
+    public static function makeProductArray(string $file)
+    {
         $string = file_get_contents($file);
 
         $productsJson = json_decode($string, true);
 
         $products = [];
         foreach ($productsJson as $product) {
-            switch($product['type']) {
+            switch ($product['type']) {
                 case "cd":
-                    $cdproduct = new \awe\CdProduct($product['id'],$product['title'], $product['firstname'],
-                        $product['mainname'],$product['price'], $product['playlength']);
+                    $cdproduct = new \awe\CdProduct(
+                        $product['id'],
+                        $product['title'],
+                        $product['firstname'],
+                        $product['mainname'],
+                        $product['price'],
+                        $product['playlength']
+                    );
                     $products[] = $cdproduct;
                     break;
                 case "book":
-                    $bookproduct = new \awe\BookProduct($product['id'],$product['title'], $product['firstname'],
-                        $product['mainname'],$product['price'], $product['numpages']);
-                    $products[]=$bookproduct;
+                    $bookproduct = new \awe\BookProduct(
+                        $product['id'],
+                        $product['title'],
+                        $product['firstname'],
+                        $product['mainname'],
+                        $product['price'],
+                        $product['numpages']
+                    );
+                    $products[] = $bookproduct;
+                    break;
+                case "game":
+                    $gameproduct = new \awe\GameProduct(
+                        $product['id'],
+                        $product['title'],
+                        $product['firstname'],
+                        $product['mainname'],
+                        $product['price'],
+                        $product['pegi']
+                    );
+                    $products[] = $gameproduct;
                     break;
             }
         }
         return $products;
     }
 
-    public static function deleteProductWithId(string $file, int $id) {
+    public static function deleteProductWithId(string $file, int $id)
+    {
         $string = file_get_contents($file);
 
         $productsJson = json_decode($string, true);
 
         $products = [];
         foreach ($productsJson as $product) {
-            if($product['id'] != $id) {
+            if ($product['id'] != $id) {
                 $products[] = $product;
             }
         }
@@ -52,7 +77,7 @@ class JsonUtility
 
         $ids = [];
         foreach ($productsJson as $product) {
-             $ids[] = $product['id'];
+            $ids[] = $product['id'];
         }
         rsort($ids);
         $newId = $ids[0] + 1;
@@ -70,8 +95,9 @@ class JsonUtility
         $newProduct['mainname'] = $sname;
         $newProduct['price'] = $price;
 
-        if($producttype=='cd') $newProduct['playlength'] = $pages;
-        if($producttype=='book') $newProduct['numpages'] = $pages;
+        if ($producttype == 'cd') $newProduct['playlength'] = $pages;
+        if ($producttype == 'book') $newProduct['numpages'] = $pages;
+        if ($producttype == 'game') $newProduct['pegi'] = $pages;
 
         $products[] = $newProduct;
 
